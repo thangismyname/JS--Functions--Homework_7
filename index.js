@@ -1,118 +1,209 @@
+var Array = [], ArrayFloat = [];
+
+// Function Get Element By ID
 function get(n) {
-    return document.getmentById(n)
+    return document.getElementById(n)
 }
 
-function getNumber() {
-    var n = Number(get("inputNum").value);
-    numArray.push(n),
-    get("txtArray").innerHTML = numArray
+// Function Get Array
+function ArrayElements() {
+    var number = Number(get("inputNum").value); 
+    Array.push(number); 
+
+    get("txtArray").textContent = "Dãy số hiện tại: " + Array.join(", ");
+
+    let positions = Array.map((_, index) => index).join(", ");
+    get("txtArrayLocation").textContent = "\nVị trí dãy số: " + positions;
 }
 
-function sumPositive() {
-    for (var n = 0, r = 0; r < numArray.length; r++)
-        numArray[r] > 0 && (n += numArray[r]);
-    get("txtSum").innerHTML = "Tổng số dương: " + n
+// Function Swap
+function swapNum(a, b) {
+    var e = Array[a];
+    Array[a] = Array[b];
+    Array[b] = e
 }
 
-function countPositive() {
-    for (var n = 0, r = 0; r < numArray.length; r++)
-        numArray[r] > 0 && n++;
-    get("txtCount").innerHTML = "Số dương: " + n
-}
-
-function findMin() {
-    for (var n = numArray[0], r = 1; r < numArray.length; r++)
-        numArray[r] < n && (n = numArray[r]);
-    get("txtMin").innerHTML = "Số nhỏ nhất: " + n
-}
-
-function findMinPos() {
-    for (var n = [], r = 0; r < numArray.length; r++)
-        numArray[r] > 0 && n.push(numArray[r]);
-    if (n.length > 0) {
-        for (var e = n[0], r = 1; r < n.length; r++)
-            n[r] < e && (e = n[r]);
-        get("txtMinPos").innerHTML = "Số dương nhỏ nhất: " + e
-    } else
-        get("txtMinPos").innerHTML = "Không có số dương trong mảng"
-}
-
-function findMinPos() {
-    for (var n = [], r = 0; r < numArray.length; r++)
-        numArray[r] > 0 && n.push(numArray[r]);
-    if (n.length > 0) {
-        for (var e = n[0], r = 1; r < n.length; r++)
-            n[r] < e && (e = n[r]);
-        get("txtMinPos").innerHTML = "Số dương nhỏ nhất: " + e
-    } else
-        get("txtMinPos").innerHTML = "Không có số dương trong mảng"
-}
-
-function findEven() {
-    for (var n = 0, r = 0; r < numArray.length; r++)
-        numArray[r] % 2 == 0 && (n = numArray[r]);
-    get("txtEven").innerHTML = "Số chẵn cuối cùng: " + n
-}
-
-function swap(n, r) {
-    var e = numArray[n];
-    numArray[n] = numArray[r],
-    numArray[r] = e
-}
-
-function changePosition() {
-    swap(get("inputIndex1").value, get("inputIndex2").value),
-    get("txtChangePos").innerHTML = "Mảng sau khi đổi: " + numArray
-}
-
-function sortIncrease() {
-    for (var n = 0; n < numArray.length; n++)
-        for (var r = 0; r < numArray.length - 1; r++)
-            numArray[r] > numArray[r + 1] && swap(r, r + 1);
-    get("txtIncrease").innerHTML = "Mảng sau khi sắp xếp: " + numArray
-}
-
-function checkPrime(n) {
-    if (n < 2)
+// Function Check Prime
+function checkPrime(number) {
+    if (number < 2)
         return !1;
-    for (var r = 2; r <= Math.sqrt(n); r++)
-        if (n % r == 0)
+    for (var i = 2; i <= Math.sqrt(number); i++)
+        if (number % i == 0)
             return !1;
     return !0
 }
+
+// Function Get Array that have Float Number
+function ArrayWithFloats() {
+    var number = Number(get("inputFloat").value);
+    ArrayFloat.push(number),
+    get("txtArrayFloat").innerHTML = ArrayFloat
+}
+
+// Function 1
+function sumPositive() {
+    for (var total = 0, i = 0; i < Array.length; i++){
+        if (Array[i] > 0) {
+            total += Array[i];
+        }
+    get("txtSum").textContent = "Tổng số dương: " + total
+    }
+        
+}
+
+// Function 2
+function countPositive() {
+    for (var count = 0, i = 0; i < Array.length; i++)
+        if (Array[i] > 0) {
+            count++;
+        }
+    get("txtCount").textContent = "Số dương: " + count
+}
+
+// Function 3
+function findMin() {
+    for (var number = Array[0], i = 1; i < Array.length; i++)
+        if (Array[i] < number) {
+            number = Array[i];
+        }
+    get("txtMin").textContent = "Số nhỏ nhất: " + number
+}
+
+// Function 4
+function findMinPos() {
+    for (var number = [], i = 0; i < Array.length; i++)
+        Array[i] > 0 && number.push(Array[i]);
+    if (number.length > 0) {
+        for (var e = number[0], i = 1; i < number.length; i++)
+            if (number[i] < e) {
+                e = number[i]
+            }
+        get("txtMinPos").textContent = "Số dương nhỏ nhất: " + e
+    } else
+        get("txtMinPos").textContent = "Không có số dương trong mảng"
+}
+
+// Function 5
+function findEven() {
+    for (var number = 0, i = Array.length; i >= 0; i--)
+        if (Array[i] % 2 == 0) {
+            number = Array[i];
+            break
+        }
+    get("txtEven").textContent = "Số chẵn cuối cùng: " + number
+}
+
+// Function 6
+function changePosition() {
+    var inputValueLocation1 = -1;
+    var inputValueLocation2 = -1;
+    
+    // Check if both inputValue fields are filled
+    if (get("inputValue1").value !== "" && get("inputValue2").value !== "") {
+        for (var i = 0; i < Array.length; i++) {
+            if (Array[i] == get("inputValue1").value) {
+                inputValueLocation1 = i;
+            }
+            if (Array[i] == get("inputValue2").value && inputValueLocation1 != i) {
+                inputValueLocation2 = i;
+            }
+        }
+    }
+
+    switch (true) {
+        // Case where both inputLocation fields are filled
+        case (get("inputLocation1").value !== "" && get("inputLocation2").value !== ""):
+            let location1 = parseInt(get("inputLocation1").value);
+            let location2 = parseInt(get("inputLocation2").value);
+
+            if (location1 >= 0 && location2 >= 0 && location1 !== location2) {
+                swapNum(location1, location2);
+                get("txtChangePos").textContent = "Mảng sau khi đổi: " + Array.join(", ");
+            } else {
+                get("txtChangePos").textContent = "Vui lòng nhập chỉ số hợp lệ!";
+            }
+            break;
+
+        // Case where both inputValueLocation1 and inputValueLocation2 are found
+        case (inputValueLocation1 !== -1 && inputValueLocation2 !== -1):
+            swapNum(inputValueLocation1, inputValueLocation2);
+            get("txtChangePos").textContent = "Mảng sau khi đổi: " + Array.join(", ");
+            break;
+
+        // Case where both value and location fields are filled (error: both methods of changing are being used)
+        case (get("inputLocation1").value !== "" && get("inputLocation2").value !== "" && get("inputValue1").value !== "" && get("inputValue2").value !== ""):
+            get("txtChangePos").textContent = "Vui lòng chỉ nhập 1 trong 2 cách đổi";
+            break;
+
+        default:
+            get("txtChangePos").textContent = "Vui lòng nhập vị trí cần đổi hoặc giá trị cần đổi";
+            break;
+    }
+}
+
+// Function 7
+function sortIncrease() {
+    for (var i = 0; i < Array.length; i++)
+        for (var j = 0; j < Array.length - 1; j++)
+            if (Array[j] > Array[j + 1]) {
+                swapNum(j, j + 1);
+            }
+    get("txtIncrease").textContent = "Mảng sau khi sắp xếp: " + Array
+}
+
+// Function 8
 function findPrime() {
-    for (var n = -1, r = 0; r < numArray.length; r++) {
-        if (checkPrime(numArray[r])) {
-            n = numArray[r];
+    for (var number = -1, i = 0; i < Array.length; i++) {
+        if (checkPrime(Array[i])) {
+            number = Array[i];
             break
         }
     }
-    get("txtPrime").innerHTML = -1 !== n ? n : "Không có số nguyên tố"
+    if (number == -1) {
+        get("txtPrime").textContent = "Không có số nguyên tố trong mảng"
+    }
+    else {
+        get("txtPrime").textContent = "Số nguyên tố đầu tiên: " + number
+    }
 }
 
-function getFloat() {
-    var n = Number(get("inputFloat").value);
-    arrayFloat.push(n),
-    get("txtArrayFloat").innerHTML = arrayFloat
-}
-
+// Function 9
 function findInt() {
-    for (var n = 0, r = 0; r < arrayFloat.length; r++)
-        Number.isInteger(arrayFloat[r]) && n++;
-    get("txtInt").innerHTML = "Số nguyên: " + n
+    for (var number = 0, i = 0; i < ArrayFloat.length; i++){
+        if (Number.isInteger(ArrayFloat[i])) {
+            number++;
+            get("txtInt").innerHTML = "Số nguyên: " + number
+        } 
+    }
+    if (number == 0) {
+        get("txtInt").innerHTML = "Không có số nguyên trong mảng"
+    }
+        
 }
 
+// Function 10
 function compareNum() {
-    for (var n = 0, r = 0, e = 0; e < numArray.length; e++)
-        numArray[e] > 0 ? n++ : numArray[e] < 0 && r++;
-    get("txtCompare").innerHTML = n > r ? "Số dương > Số âm" : n < r ? "Số âm > Số dương" : "Số âm = Số dương"
+    for (var positive = 0, negative = 0, i = 0; i < Array.length; i++) {
+        if (Array[i] > 0) {
+            positive++
+        } else if (Array[i] < 0) {
+            negative++
+        }
+    }
+    if (positive > negative) {
+        get("txtCompare").textContent = "Số dương nhiều hơn số âm"
+    } else if (positive < negative) {
+        get("txtCompare").textContent = "Số âm nhiều hơn số dương"
+    } else {
+        get("txtCompare").textContent = "Số dương bằng số âm"
+    }    
 }
-document.addEventListener("contextmenu", function(n) {
-    n.preventDefault()
+
+document.addEventListener("contextmenu", function(number) {
+    number.preventDefault()
 }, !1),
 document.onkeydown = function(n) {
-    return 123 != (n = n || window.event).keyCode && (!n.ctrlKey || !n.shiftKey || 73 != n.keyCode) && void 0
+    return 123 != (number = number || window.event).keyCode && (!number.ctrlKey || !number.shiftKey || 73 != number.keyCode) && void 0
 }
 ;
-var numArray = []
-  , arrayFloat = [];
+
